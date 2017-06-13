@@ -71,4 +71,20 @@ class RomanNumeralsController extends Controller
             ->transformWith(new ConvertTransformer())
             ->toJson();
     }
+
+    /**
+     * Show the ten roman-numeral records with the highest number of conversions.
+     * Will show fewer than 10 if the number of conversion records is less than 10.
+     */
+    public function showTop10()
+    {
+        $top10converted = RomanNumeral::orderBy('num_conversions', 'desc')
+            ->take(10)
+            ->get();
+
+        return fractal()
+            ->collection($top10converted)
+            ->transformWith(new ConvertTransformer())
+            ->toJson();
+    }
 }
