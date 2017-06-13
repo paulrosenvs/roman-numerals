@@ -13,28 +13,8 @@ use Illuminate\Http\Request;
 |
 */
 
-/*Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});*/
-
 Route::get('convert/{num}', 'RomanNumeralsController@convert');
 
 Route::get('show-recent', 'RomanNumeralsController@showRecent');
 
 Route::get('show-top10', 'RomanNumeralsController@showTop10');
-
-
-/*Route::group(['middleware' => 'auth:api'], function () {
-    Route::get('convert', function ()    {
-        return response()->json(['name' => 'converted2']);
-        // Uses Auth Middleware
-    });
-
-    Route::get('show-recent', function () {
-        // Uses Auth Middleware
-    });
-
-    Route::get('show-top10', function () {
-        // Uses Auth Middleware
-    });
-});*/
