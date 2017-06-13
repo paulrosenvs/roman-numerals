@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Transformers\ConvertTransformer;
+use App\Transformers\ErrorTransformer;
 use Illuminate\Http\Request;
 use App\IntegerConversionInterface;
 use App\RomanNumeral;
@@ -26,7 +27,15 @@ class RomanNumeralsController extends Controller
     public function convert($num)
     {
         $num = (int) $num; //Ensure integer.
-        $romanNumeralStr = $this->integerToRomanConversion->toRomanNumerals($num);
+        try {
+            $romanNumeralStr = $this->integerToRomanConversion->toRomanNumerals($num);
+        }
+        catch (\Exception $e) {
+            return fractal()
+                ->item($e)
+                ->transformWith(new ErrorTransformer())
+                ->toJson();
+        }
 
         $romanNumeral = RomanNumeral::find($num);
         if (!$romanNumeral) {
@@ -43,5 +52,10 @@ class RomanNumeralsController extends Controller
             ->item($romanNumeral)
             ->transformWith(new ConvertTransformer())
             ->toJson();
+    }
+
+    public function showRecent()
+    {
+
     }
 }

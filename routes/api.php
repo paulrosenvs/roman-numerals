@@ -17,9 +17,11 @@ use Illuminate\Http\Request;
     return $request->user();
 });*/
 
-Route::get('convert/{num}', 'RomanNumeralsController@convert' /*function ()    {
-    return response()->json(['name' => 'converted']);
-}*/);
+Route::get('convert/{num}', 'RomanNumeralsController@convert');
+
+Route::get('show-recent', 'RomanNumeralsController@showRecent');
+
+Route::get('show-top10', 'RomanNumeralsController@showTop10');
 
 
 /*Route::group(['middleware' => 'auth:api'], function () {

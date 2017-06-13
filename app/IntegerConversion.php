@@ -6,6 +6,7 @@ class IntegerConversion implements IntegerConversionInterface
 {
     const MIN_VAL = 1;
     const MAX_VAL = 3999;
+    const BAD_REQUEST = 400;
 
     /**
      * Integer divide $a by $b with integer result. Not necessary with PHP 7 where this function exists.
@@ -25,7 +26,7 @@ class IntegerConversion implements IntegerConversionInterface
         //First, ensure $integer is valid.
         $integer = (int) $integer;
         if ($integer < self::MIN_VAL || $integer > self::MAX_VAL) {
-            throw new Exception("Invalid number specified");
+            throw new \Exception("Invalid number specified", self::BAD_REQUEST);
         }
 
         //Next, extract the roman-numeral components of the integer.
