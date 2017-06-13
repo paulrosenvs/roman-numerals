@@ -4,6 +4,7 @@ namespace App\Transformers;
 
 use App\RomanNumeral;
 use League\Fractal\TransformerAbstract;
+use Carbon\Carbon;
 
 class ConvertTransformer extends TransformerAbstract
 {
@@ -18,7 +19,9 @@ class ConvertTransformer extends TransformerAbstract
     {
         return [
             'decimal' => $romanNumeralItem->int_val,
-            'roman-numeral' => $romanNumeralItem->roman_numeral
+            'roman-numeral' => $romanNumeralItem->roman_numeral,
+            'num-conversions' => $romanNumeralItem->num_conversions,
+            'last-converted' => (new Carbon($romanNumeralItem->updated_at))->toDayDateTimeString()
         ];
     }
 }

@@ -7,6 +7,7 @@ use App\Transformers\ErrorTransformer;
 use Illuminate\Http\Request;
 use App\IntegerConversionInterface;
 use App\RomanNumeral;
+use Carbon\Carbon;
 
 class RomanNumeralsController extends Controller
 {
@@ -54,8 +55,20 @@ class RomanNumeralsController extends Controller
             ->toJson();
     }
 
+    /**
+     * Show all recent (updated in the last hour) roman numeral records.
+     *
+     * @return string A JSON string containing list of the most recently-converted.
+     */
     public function showRecent()
     {
+        $recentlyConverted = RomanNumeral::where('updated_at', '>', Carbon::now()->subHour())
+            ->latest('updated_at')
+            ->get();
 
+        return fractal()
+            ->collection($recentlyConverted)
+            ->transformWith(new ConvertTransformer())
+            ->toJson();
     }
 }
