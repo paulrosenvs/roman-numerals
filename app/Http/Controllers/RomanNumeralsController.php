@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Transformers\ConvertTransformer;
 use Illuminate\Http\Request;
 use App\IntegerConversionInterface;
 use App\RomanNumeral;
@@ -38,6 +39,9 @@ class RomanNumeralsController extends Controller
         }
         $romanNumeral->save();
 
-        return json_encode(['num' => $num, 'roman' => $romanNumeralStr]);
+        return fractal()
+            ->item($romanNumeral)
+            ->transformWith(new ConvertTransformer())
+            ->toJson();
     }
 }
